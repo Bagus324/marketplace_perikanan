@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "486608719999",
+    "project_id": "marketplace-perikanan-166eb",
+    "storage_bucket": "marketplace-perikanan-166eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486608719999:android:3a200c72f2b7cab6112f4a",
+        "android_client_info": {
+          "package_name": "com.pnj.marketplace_perikanan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486608719999-sq2e25r38ud7o889h8o8hsqioekugbra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuhJ9plXzvwvsS7JdLN5NfxnSDhO2dmHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486608719999-sq2e25r38ud7o889h8o8hsqioekugbra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
