@@ -14,7 +14,7 @@
         android:background="@color/white"
         android:orientation="vertical"
         tools:context=".SettingFragment">
-        
+
 
         <TextView
             android:id="@+id/username"
