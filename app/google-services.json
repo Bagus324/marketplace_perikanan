@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "1083455377718",
-    "firebase_url": "https://marketplace-perikanan-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "marketplace-perikanan",
-    "storage_bucket": "marketplace-perikanan.appspot.com"
+    "project_number": "486608719999",
+    "project_id": "marketplace-perikanan-166eb",
+    "storage_bucket": "marketplace-perikanan-166eb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1083455377718:android:5be71e67a885e5da0a6397",
+        "mobilesdk_app_id": "1:486608719999:android:3a200c72f2b7cab6112f4a",
         "android_client_info": {
           "package_name": "com.pnj.marketplace_perikanan"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1083455377718-64mcb8ghhk3tgkh751lahel9dl61ls6i.apps.googleusercontent.com",
+          "client_id": "486608719999-sq2e25r38ud7o889h8o8hsqioekugbra.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBHctCPthu4BQ5H9bk4OEPJbM1yAYoRfkc"
+          "current_key": "AIzaSyAuhJ9plXzvwvsS7JdLN5NfxnSDhO2dmHc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1083455377718-64mcb8ghhk3tgkh751lahel9dl61ls6i.apps.googleusercontent.com",
+              "client_id": "486608719999-sq2e25r38ud7o889h8o8hsqioekugbra.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

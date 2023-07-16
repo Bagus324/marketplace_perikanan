@@ -9,10 +9,52 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Marketplace_perikanan"
+        android:theme="@style/Theme.Marketplace_Perikanan"
         tools:targetApi="31">
         <activity
+            android:name=".chat.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.SettingsUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ikan.AddIkanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ikan.EditIkanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".keranjang.KeranjangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.UsersMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.DetailIkanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.BeliGagalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.BeliSuksesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.RiwayatPerbelanjaanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".users.DetailIkanKeranjangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
