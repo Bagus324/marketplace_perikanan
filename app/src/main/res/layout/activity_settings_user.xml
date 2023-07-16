@@ -74,6 +74,25 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:backgroundTint="#2288dd"
+            android:padding="18dp"
+            android:text="Keranjang Kamu"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:backgroundTint="#00dd88"
+            android:padding="18dp"
+            android:text="Riwayat Perbelanjaan Kamu"
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.pnj.marketplace_perikanan
+package com.pnj.marketplace_perikanan.users
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -15,24 +15,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.pnj.marketplace_perikanan.auth.SettingsActivity
 import com.pnj.marketplace_perikanan.auth.SettingsUserActivity
 import com.pnj.marketplace_perikanan.chat.ChatActivity
-import com.pnj.marketplace_perikanan.databinding.ActivityMainBinding
-import com.pnj.marketplace_perikanan.ikan.AddIkanActivity
+import com.pnj.marketplace_perikanan.databinding.UserActivityMainBinding
 import com.pnj.marketplace_perikanan.ikan.Ikan
 import com.pnj.marketplace_perikanan.ikan.IkanAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import com.pnj.marketplace_perikanan.R
 
+class UsersMainActivity : AppCompatActivity() {
 
-
-
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: UserActivityMainBinding
 
     private lateinit var ikanRecyclerView: RecyclerView
     private lateinit var ikanArrayList: ArrayList<Ikan>
@@ -42,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = UserActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ikanRecyclerView = binding.makananListView
@@ -50,17 +46,13 @@ class MainActivity : AppCompatActivity() {
         ikanRecyclerView.setHasFixedSize(true)
 
         ikanArrayList = arrayListOf()
-        ikanAdapter = IkanAdapter(ikanArrayList, "main")
+        ikanAdapter = IkanAdapter(ikanArrayList,"main")
 
         ikanRecyclerView.adapter = ikanAdapter
 
         load_data()
         swipeDelete()
 
-        binding.btnAddIkan.setOnClickListener {
-            val intentMain = Intent(this, AddIkanActivity::class.java)
-            startActivity(intentMain)
-        }
 
         // TextChangedListener
         binding.txtSearchIkan.addTextChangedListener(object: TextWatcher {
@@ -77,17 +69,18 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+
             override fun afterTextChanged(p0: Editable?) {}
         })
 
         binding.bottomNavigation.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_bottom_home -> {
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, UsersMainActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.nav_bottom_setting -> {
-                    val intent = Intent(this, SettingsActivity::class.java)
+                    val intent = Intent(this, SettingsUserActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.nav_bottom_chat -> {
@@ -123,6 +116,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun search_data(keyword : String) {
         ikanArrayList.clear()

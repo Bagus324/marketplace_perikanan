@@ -1,11 +1,10 @@
 package com.pnj.marketplace_perikanan.ikan
 
 data class Ikan(
-    var nik: String? = null,
-    var nama: String? = null,
-    var tgl_lahir: String? = null,
-    var jenis_kelamin: String? = null,
-    var penyakit_bawaan: String? = null,
+    var nama_ikan: String? = null,
+    var deskripsi_ikan: String? = null,
+    var stok_ikan: String? = null,
+    var harga_ikan: String? = null
 )
 
 

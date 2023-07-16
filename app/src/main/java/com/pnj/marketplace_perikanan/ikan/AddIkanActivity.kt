@@ -32,24 +32,9 @@ class AddIkanActivity : AppCompatActivity() {
         binding = ActivityAddIkanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.TxtAddTglLahir.setOnClickListener {
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
-
-            val dpd = DatePickerDialog(this,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    binding.TxtAddTglLahir.setText("" + year + "-" + monthOfYear + "-" + dayOfMonth)
-                }, year, month, day)
-
-            dpd.show()
-
-            binding.BtnAddIkan.setOnClickListener {
-                addIkan()
-            }
+        binding.BtnAddIkan.setOnClickListener {
+            addIkan()
         }
-
         binding.BtnImgIkan.setOnClickListener {
             openCamera()
         }
@@ -65,42 +50,28 @@ class AddIkanActivity : AppCompatActivity() {
     }
 
     private fun addIkan() {
-        var nik: String = binding.TxtAddNIK.text.toString()
-        var nama: String = binding.TxtAddNama.text.toString()
-        var tgl_lahir: String = binding.TxtAddTglLahir.text.toString()
+        var nama_ikan: String = binding.TxtAddNama.text.toString()
+        var stok: String = binding.TxtAddStok.text.toString()
+        var deksripsi: String = binding.TxtAddDeskripsi.text.toString()
+        var harga: String = binding.TxtAddHarga.text.toString()
 
-        var jk: String = ""
-        if(binding.RdnEditJKL.isChecked) {
-            jk = "Laki - Laki"
-        }
-        else if (binding.RdnEditJKP.isChecked) {
-            jk = "Perempuan"
-        }
-
-        var penyakit = ArrayList<String>()
-        if (binding.ChkDiabetes.isChecked) {
-            penyakit.add("diabetes")
-        }
-        if (binding.ChkJantung.isChecked) {
-            penyakit.add("jantung")
-        }
-        if (binding.ChkAsma.isChecked) {
-            penyakit.add("asma")
-        }
-
-        val penyakit_string = penyakit.joinToString("|")
 
         val ikan: MutableMap<String, Any> = HashMap()
-        ikan["nik"] = nik
-        ikan["nama"] = nama
-        ikan["tgl_lahir"] = tgl_lahir
-        ikan["jenis_kelamin"] = jk
-        ikan["penyakit_bawaan"] = penyakit_string
+        ikan["nama_ikan"] = nama_ikan
+        ikan["deskripsi_ikan"] = deksripsi
+        ikan["stok_ikan"] = stok
+        ikan["harga_ikan"] = harga
+
 
         if (dataGambar != null) {
-            uploadPictFirebase(dataGambar!!, "${nik}_${nama}")
+            uploadPictFirebase(dataGambar!!, "foto_${nama_ikan}")
 
-            firestoreDatabase.collection("ikan").add(ikan)
+//            firestoreDatabase.collection("data_ikan").add(ikan)
+//                .addOnSuccessListener {
+//                    val intentMain = Intent(this, MainActivity::class.java)
+//                    startActivity(intentMain)
+//                }
+            firestoreDatabase.collection("data_ikan").document(nama_ikan).set(ikan)
                 .addOnSuccessListener {
                     val intentMain = Intent(this, MainActivity::class.java)
                     startActivity(intentMain)
@@ -120,7 +91,7 @@ class AddIkanActivity : AppCompatActivity() {
 
     private fun uploadPictFirebase(img_bitmap: Bitmap, file_name: String) {
         val baos = ByteArrayOutputStream()
-        val ref = FirebaseStorage.getInstance().reference.child("img_ikan/${file_name}.jpg")
+        val ref = FirebaseStorage.getInstance().reference.child("foto_ikan/${file_name}.jpg")
         img_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
         val img = baos.toByteArray()

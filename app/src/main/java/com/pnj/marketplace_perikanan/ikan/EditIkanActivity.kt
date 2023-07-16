@@ -38,17 +38,8 @@ class EditIkanActivity : AppCompatActivity() {
         binding = ActivityEditIkanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val (year, month, day, curr_ikan) = setDefaultValue()
+        val (curr_ikan) = setDefaultValue()
 
-        binding.TxtEditTglLahir.setOnClickListener {
-            val dpd = DatePickerDialog(this,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    binding.TxtEditTglLahir.setText(
-                        "" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth)
-                }, year.toString().toInt(), month.toString().toInt(), day.toString().toInt()
-            )
-            dpd.show()
-        }
 
         binding.BtnEditIkan.setOnClickListener {
             val new_data_ikan = newIkan()
@@ -68,84 +59,40 @@ class EditIkanActivity : AppCompatActivity() {
 
     fun setDefaultValue(): Array<Any> {
         val intent = intent
-        val nik = intent.getStringExtra("nik").toString()
-        val nama = intent.getStringExtra("nama").toString()
-        val tgl_lahir = intent.getStringExtra("tgl_lahir").toString()
-        val jenis_kelamin = intent.getStringExtra("jenis_kelamin").toString()
-        val penyakit_bawaan = intent.getStringExtra("penyakit_bawaan").toString()
+        val nama_ikan = intent.getStringExtra("nama_ikan").toString()
+        val stok_ikan = intent.getStringExtra("stok_ikan").toString()
+        val deskripsi_ikan = intent.getStringExtra("deskripsi_ikan").toString()
+        val harga_ikan = intent.getStringExtra("harga_ikan").toString()
 
-        binding.TxtEditNIK.setText(nik)
-        binding.TxtEditNama.setText(nama)
-        binding.TxtEditTglLahir.setText(tgl_lahir)
+        binding.TxtEditDeskripsi.setText(deskripsi_ikan)
+        binding.TxtEditNama.setText(nama_ikan)
+        binding.TxtEditStok.setText(stok_ikan)
+        binding.TxtEditHarga.setText(harga_ikan)
 
-        val tgl_split = intent.getStringExtra("tgl_lahir")
-            .toString().split("-").toTypedArray()
-        val year = tgl_split[0].toInt()
-        val month = tgl_split[1].toInt() - 1
-        val day = tgl_split[2].toInt()
 
-        if (jenis_kelamin == "Laki - Laki") {
-            binding.RdnEditJKL.isChecked = true
-        }
-        else if (jenis_kelamin == "Perempuan") {
-            binding.RdnEditJKP.isChecked = true
-        }
 
-        val penyakit = penyakit_bawaan.split("|").toTypedArray()
-        for (p in penyakit) {
-            if (p == "diabetes") {
-                binding.ChkEditDiabetes.isChecked = true
-            }
-            else if (p == "jantung") {
-                binding.ChkEditJantung.isChecked = true
-            }
-            else if (p == "asma") {
-                binding.ChkEditAsma.isChecked = true
-            }
-        }
-
-        val curr_ikan = Ikan(nik, nama, tgl_lahir, jenis_kelamin, penyakit_bawaan)
-        return arrayOf(year, month, day, curr_ikan)
+        val curr_ikan = Ikan(nama_ikan, deskripsi_ikan, stok_ikan, harga_ikan)
+        return arrayOf(curr_ikan)
 
     }
 
     fun newIkan(): Map<String, Any> {
-        var nik : String = binding.TxtEditNIK.text.toString()
-        var nama : String = binding.TxtEditNama.text.toString()
-        var tgl_lahir : String = binding.TxtEditTglLahir.text.toString()
+        var deskripsi_ikan : String = binding.TxtEditDeskripsi.text.toString()
+        var nama_ikan : String = binding.TxtEditNama.text.toString()
+        var stok_ikan : String = binding.TxtEditStok.text.toString()
+        var harga_ikan : String = binding.TxtEditHarga.text.toString()
 
-        var jk : String = ""
-        if (binding.RdnEditJKL.isChecked) {
-            jk = "Laki - Laki"
-        }
-        else if (binding.RdnEditJKP.isChecked) {
-            jk ="Perempuan"
-        }
-
-        var penyakit = ArrayList<String>()
-        if  (binding.ChkEditDiabetes.isChecked) {
-            penyakit.add("diabetes")
-        }
-        if (binding.ChkEditJantung.isChecked) {
-            penyakit.add("jantung")
-        }
-        if (binding.ChkEditAsma.isChecked) {
-            penyakit.add("asma")
-        }
 
         if (dataGambar != null) {
-            uploadPictFirebase(dataGambar!!, "${nik}_${nama}")
+            uploadPictFirebase(dataGambar!!, "foto_${nama_ikan}")
 
         }
 
-        val penyakit_string = penyakit.joinToString("|")
-
         val ikan = mutableMapOf<String, Any>()
-        ikan["nik"] = nik
-        ikan["nama"] = nama
-        ikan["tgl_lahir"] = tgl_lahir
-        ikan["jenis_kelamin"] = jk
-        ikan["penyakit_bawaan"] = penyakit_string
+        ikan["nama_ikan"] = nama_ikan
+        ikan["deskripsi_ikan"] = deskripsi_ikan
+        ikan["stok_ikan"] = stok_ikan
+        ikan["harga_ikan"] = harga_ikan
 
         return ikan
 
@@ -153,19 +100,18 @@ class EditIkanActivity : AppCompatActivity() {
 
     private fun updateIkan(ikan: Ikan, newIkanMap: Map<String, Any>) =
         CoroutineScope(Dispatchers.IO).launch {
-            val personQuery = db.collection("ikan")
-                .whereEqualTo("nik", ikan.nik)
-                .whereEqualTo("nama", ikan.nama)
-                .whereEqualTo("jenis_kelamin", ikan.jenis_kelamin)
-                .whereEqualTo("tgl_lahir",ikan.tgl_lahir)
-                .whereEqualTo("penyakit_bawaan", ikan.penyakit_bawaan)
+            val personQuery = db.collection("data_ikan")
+                .whereEqualTo("nama_ikan", ikan.nama_ikan)
+                .whereEqualTo("deskripsi_ikan", ikan.deskripsi_ikan)
+                .whereEqualTo("stok_ikan", ikan.stok_ikan)
+                .whereEqualTo("harga_ikan", ikan.harga_ikan)
                 .get()
                 .await()
 
             if (personQuery.documents.isNotEmpty()) {
                 for (document in personQuery) {
                     try {
-                        db.collection("ikan").document(document.id).set(
+                        db.collection("data_ikan").document(document.id).set(
                             newIkanMap,
                             SetOptions.merge()
                         )
@@ -189,10 +135,9 @@ class EditIkanActivity : AppCompatActivity() {
 
     fun showFoto() {
         val intent = intent
-        val nik = intent.getStringExtra("nik").toString()
-        val nama =intent.getStringExtra("nama").toString()
+        val nama_ikan =intent.getStringExtra("nama_ikan").toString()
 
-        val storageRef = FirebaseStorage.getInstance().reference.child("img_ikan/${nik}_${nama}.jpg")
+        val storageRef = FirebaseStorage.getInstance().reference.child("foto_ikan/foto_${nama_ikan}.jpg")
         val localfile = File.createTempFile("tempImage", "jpg")
         storageRef.getFile(localfile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
@@ -223,7 +168,7 @@ class EditIkanActivity : AppCompatActivity() {
 
     private fun uploadPictFirebase(img_bitmap: Bitmap, file_name: String) {
         val baos = ByteArrayOutputStream()
-        val ref = FirebaseStorage.getInstance().reference.child("img_ikan/${file_name}.jpg")
+        val ref = FirebaseStorage.getInstance().reference.child("foto_ikan/${file_name}.jpg")
         img_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
         val img = baos.toByteArray()

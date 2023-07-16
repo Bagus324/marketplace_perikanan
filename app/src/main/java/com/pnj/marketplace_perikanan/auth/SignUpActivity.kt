@@ -3,6 +3,7 @@ package com.pnj.marketplace_perikanan.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.pnj.marketplace_perikanan.databinding.ActivitySignUpBinding
@@ -33,22 +34,44 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signup_firebase(email: String, password: String, confirm_password: String) {
-        if (email.isNotEmpty() && password.isNotEmpty() && confirm_password.isNotEmpty()) {
-            if (password == confirm_password) {
-                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val intent = Intent(this, SignInActivity::class.java)
-                        startActivity(intent)
-                    }
-                    else{ Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()}
-                }
+        var emailCurr = email
+        var emailListed = emailCurr.toList()
+        var idx = 0
+        for (x in emailListed) {
+//                        Log.e("index @ ", x.toString())
+            if (x.toString() == "@") {
+                break
             }
-            else {
-                Toast.makeText(this, "Samakan Password dan Konfirmasi Password", Toast.LENGTH_SHORT).show()
-            }
+            idx += 1
         }
-        else {
-            Toast.makeText(this, "Lengkapi Input", Toast.LENGTH_SHORT).show()
+        var domainEmail = emailCurr.substring(idx)
+        Log.e("domain", domainEmail)
+        if (domainEmail == "@admin.com") {
+            Toast.makeText(this, "Tidak bisa menggunakan domain email ini", Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            if (email.isNotEmpty() && password.isNotEmpty() && confirm_password.isNotEmpty()) {
+                if (password == confirm_password) {
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                val intent = Intent(this, SignInActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Samakan Password dan Konfirmasi Password",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                Toast.makeText(this, "Lengkapi Input", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

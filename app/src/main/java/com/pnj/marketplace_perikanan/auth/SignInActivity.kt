@@ -3,10 +3,12 @@ package com.pnj.marketplace_perikanan.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.pnj.marketplace_perikanan.MainActivity
 import com.pnj.marketplace_perikanan.databinding.ActivitySignInBinding
+import com.pnj.marketplace_perikanan.users.UsersMainActivity
 
 class SignInActivity : AppCompatActivity() {
 
@@ -35,8 +37,29 @@ class SignInActivity : AppCompatActivity() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    var emailCurr = firebaseAuth.currentUser!!.email.toString()
+                    var emailListed = emailCurr.toList()
+                    var idx = 0
+                    for (x in emailListed){
+//                        Log.e("index @ ", x.toString())
+                        if (x.toString() == "@") {
+                            break
+                        }
+                        idx += 1
+                    }
+                    var domainEmail = emailCurr.substring(idx)
+                    Log.e("domain", domainEmail)
+                    if (domainEmail == "@admin.com"){
+                        Toast.makeText(this, "berhasil login sebagain admin", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else{
+                        Toast.makeText(this, "berhasil login sebagain user", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, UsersMainActivity::class.java)
+                        startActivity(intent)
+                    }
+
+
                 }
                 else {
                     Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -53,8 +76,29 @@ class SignInActivity : AppCompatActivity() {
         super.onStart()
 
         if (firebaseAuth.currentUser != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            var emailCurr = firebaseAuth.currentUser!!.email.toString()
+            var emailListed = emailCurr.toList()
+            var idx = 0
+            for (x in emailListed){
+//                        Log.e("index @ ", x.toString())
+                if (x.toString() == "@") {
+                    break
+                }
+                idx += 1
+            }
+            var domainEmail = emailCurr.substring(idx)
+            Log.e("domain", domainEmail)
+            if (domainEmail == "@admin.com"){
+                Toast.makeText(this, "berhasil login sebagai admin", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            } else{
+                Toast.makeText(this, "berhasil login sebagai user", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, UsersMainActivity::class.java)
+                startActivity(intent)
+            }
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
         }
     }
 }
