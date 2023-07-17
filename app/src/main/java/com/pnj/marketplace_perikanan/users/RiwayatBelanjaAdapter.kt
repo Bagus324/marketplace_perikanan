@@ -49,7 +49,7 @@ class RiwayatBelanjaAdapter(private val ikanList: ArrayList<RiwayatBelanjaLoad>,
 
     override fun onBindViewHolder(holder: IkanViewHolder, position: Int) {
         if(page == "hasil_belanja"){
-            val ikan: RiwayatBelanjaLoad = ikanList[position]
+            val ikan: RiwayatBelanjaLoad = ikanList.reversed()[position]
             holder.nama.text = ikan.nama_ikan.toString().uppercase()
             holder.harga.text = format_duit(ikan.harga_ikan.toString().toInt())
             holder.jumlah.text = "Pembelian " + ikan.jumlah.toString() + " Ekor"

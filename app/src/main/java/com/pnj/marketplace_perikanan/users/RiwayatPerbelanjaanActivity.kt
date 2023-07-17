@@ -68,7 +68,7 @@ class RiwayatPerbelanjaanActivity : AppCompatActivity() {
         riwayatArrayList.clear()
         db = FirebaseFirestore.getInstance()
         val email = firebaseAuth.currentUser!!.email.toString()
-        db.collection("riwayat_belanja").whereEqualTo("barusan", "0").whereEqualTo("user_id", email).orderBy("time").orderBy("time").
+        db.collection("riwayat_belanja").whereEqualTo("barusan", "0").whereEqualTo("user_id", email).orderBy("time").
         addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(
                 value: QuerySnapshot?,

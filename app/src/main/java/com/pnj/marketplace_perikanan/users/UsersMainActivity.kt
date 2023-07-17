@@ -53,7 +53,6 @@ class UsersMainActivity : AppCompatActivity() {
         ikanRecyclerView.adapter = ikanAdapter
 
 
-        swipeDelete()
 
 
         // TextChangedListener
@@ -162,107 +161,6 @@ class UsersMainActivity : AppCompatActivity() {
 //        }.addOnFailureListener{
 //            Log.e("array", ikanArrayList.toString()+"query"+query.toString())
 //        }
-
-    }
-
-    private fun deleteIkan(ikan: Ikan, doc_id: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage("Apakah ${ikan.nama_ikan} ingin dihapus ?")
-            .setCancelable(false)
-            .setPositiveButton("Yes") { dialog, id ->
-                lifecycleScope.launch {
-                    db.collection("data_ikan")
-                        .document(doc_id).delete()
-
-
-                    deleteFoto("foto_ikan/foto_${ikan.nama_ikan}.jpg")
-
-                    Toast.makeText(
-                        applicationContext,
-                        ikan.nama_ikan.toString() + " is deleted",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    load_data()
-
-                }
-
-            }
-            .setNegativeButton("No") { dialog, id ->
-                dialog.dismiss()
-                load_data()
-            }
-
-        val alert = builder.create()
-        alert.show()
-    }
-
-    private fun swipeDelete() {
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0,
-            ItemTouchHelper.RIGHT)  {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                lifecycleScope.launch {
-                    val ikan = ikanArrayList[position]
-                    val personQuery = db.collection("data_ikan")
-                        .whereEqualTo("nama_ikan", ikan.nama_ikan)
-                        .whereEqualTo("deskripsi_ikan", ikan.deskripsi_ikan)
-                        .whereEqualTo("stok_ikan", ikan.stok_ikan)
-                        .whereEqualTo("harga_ikan", ikan.harga_ikan)
-                        .get()
-                        .await()
-
-                    if (personQuery.documents.isNotEmpty()) {
-                        for (document in personQuery) {
-                            try {
-                                deleteIkan(ikan, document.id)
-                                load_data()
-                            }
-                            catch (e: Exception) {
-                                withContext(Dispatchers.Main) {
-                                    Toast.makeText(
-                                        applicationContext,
-                                        e.message.toString(),
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                applicationContext,
-                                "Ikan yang ingin di hapus tidak ditemukan",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                }
-            }
-        }).attachToRecyclerView(ikanRecyclerView)
-
-    }
-
-    private fun deleteFoto(file_name: String){
-        val storage = Firebase.storage
-        val storageRef = storage.reference
-        val deleteFileRef = storageRef.child(file_name)
-
-        if (deleteFileRef != null) {
-            deleteFileRef.delete().addOnSuccessListener {
-                Log.e("deleted", "success")
-            }.addOnFailureListener{
-                Log.e("deleted", "failed")
-            }
-        }
 
     }
 
