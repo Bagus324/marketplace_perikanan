@@ -55,7 +55,11 @@
             android:exported="false" />
         <activity
             android:name=".auth.SignInActivity"
-            android:exported="true">
+            android:exported="false" />
+        <activity
+            android:name=".users.LoadingActivity"
+            android:exported="true"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
