@@ -63,4 +63,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:32.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //Splash
+    implementation 'androidx.core:core-splashscreen:1.0.1'
 }

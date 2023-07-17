@@ -31,7 +31,8 @@ class UsersMainActivity : AppCompatActivity() {
     private lateinit var binding: UserActivityMainBinding
 
     private lateinit var ikanRecyclerView: RecyclerView
-    private lateinit var ikanArrayList: ArrayList<Ikan>
+    private val ikanArrayList: ArrayList<Ikan> = arrayListOf()
+    private val filterIkanArrayList: ArrayList<Ikan> = arrayListOf()
     private lateinit var ikanAdapter: IkanAdapter
     private lateinit var db: FirebaseFirestore
 
@@ -45,12 +46,13 @@ class UsersMainActivity : AppCompatActivity() {
         ikanRecyclerView.layoutManager = LinearLayoutManager(this)
         ikanRecyclerView.setHasFixedSize(true)
 
-        ikanArrayList = arrayListOf()
-        ikanAdapter = IkanAdapter(ikanArrayList,"main")
+        load_data()
+
+        ikanAdapter = IkanAdapter(filterIkanArrayList,"main")
 
         ikanRecyclerView.adapter = ikanAdapter
 
-        load_data()
+
         swipeDelete()
 
 
@@ -58,19 +60,21 @@ class UsersMainActivity : AppCompatActivity() {
         binding.txtSearchIkan.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val keyword = binding.txtSearchIkan.text.toString()
+                val keyword = p0.toString()
 
                 if (keyword.isNotEmpty()) {
                     search_data(keyword)
                 }
                 else {
                     load_data()
+
                 }
 
             }
 
 
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+            }
         })
 
         binding.bottomNavigation.setOnItemSelectedListener {
@@ -97,6 +101,7 @@ class UsersMainActivity : AppCompatActivity() {
 
     private fun load_data() {
         ikanArrayList.clear()
+        filterIkanArrayList.clear()
         db = FirebaseFirestore.getInstance()
         db.collection("data_ikan").
         addSnapshotListener(object : EventListener<QuerySnapshot> {
@@ -109,8 +114,11 @@ class UsersMainActivity : AppCompatActivity() {
                     return
                 }
                 for (dc: DocumentChange in value?.documentChanges!!){
-                    if (dc.type == DocumentChange.Type.ADDED)
+                    if (dc.type == DocumentChange.Type.ADDED){
                         ikanArrayList.add(dc.document.toObject(Ikan::class.java))
+                        filterIkanArrayList.add(dc.document.toObject(Ikan::class.java))
+                    }
+
                 }
                 ikanAdapter.notifyDataSetChanged()
             }
@@ -119,20 +127,41 @@ class UsersMainActivity : AppCompatActivity() {
 
 
     private fun search_data(keyword : String) {
-        ikanArrayList.clear()
+//        ikanArrayList.clear()
 
         db = FirebaseFirestore.getInstance()
+        filterIkanArrayList.clear()
 
-        val query = db.collection("data_ikan")
-            .orderBy("nama_ikan")
-            .startAt(keyword)
-            .get()
-        query.addOnSuccessListener {
-            ikanArrayList.clear()
-            for (document in it) {
-                ikanArrayList.add(document.toObject(Ikan::class.java))
-            }
+        if (keyword != "") {
+            filterIkanArrayList.addAll(ikanArrayList.filter{ x -> x.nama_ikan!!.contains(keyword)
+            } as ArrayList<Ikan>)
+//            ikanArrayList = filterIkanArrayList
+        } else {
+            filterIkanArrayList.addAll(ikanArrayList)
         }
+        Log.e("filter",filterIkanArrayList.toString())
+        ikanAdapter.notifyDataSetChanged()
+
+
+//        val query = db.collection("data_ikan")
+//            .orderBy("nama_ikan")
+//            .startAt("lele")
+//            .get()
+
+//        val query = db.collection("data_ikan")
+//            .whereEqualTo("nama_ikan", keyword)
+//            .get()
+//
+//        query.addOnSuccessListener {
+//            ikanArrayList.clear()
+//            for (document in it) {
+//                ikanArrayList.add(document.toObject(Ikan::class.java))
+//            }
+//            ikanAdapter.notifyDataSetChanged()
+//            Log.e("array", ikanArrayList.toString()+"query"+query.toString())
+//        }.addOnFailureListener{
+//            Log.e("array", ikanArrayList.toString()+"query"+query.toString())
+//        }
 
     }
 
