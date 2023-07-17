@@ -67,9 +67,10 @@ Berikut adalah daftar fitur-fitur yang terdapat pada prototype ini
 
 # Apk File Download
 
-<b>TBA</b>
+APK prototype ini dapat di unduh pada link 
+<b>[disini](https://s.pnj.ac.id/sakana_mawada_warohma)</b> atau di Release pada Repository ini
 
-#Note
+# Note
 <div align="left">
   <p>* : Data ikan terdiri dari<p>&nbsp;&nbsp;• Nama Ikan</p><p>&nbsp;&nbsp;• Harga Ikan</p><p>&nbsp;&nbsp;• Deskripsi Tentang Ikan</p><p>&nbsp;&nbsp;• Stok Ikan</p></p>
   <p>** : Fitur login pada aplikasi ini menggunakan email*password, admin dan user memiliki domain email yang berbeda, dan jika user mencoba melakukan register menggunakan domail email admin, maka akan dicegah oleh sistem. Maka dari itu juga pendaftaran admin harus dilakukan manual melalui databse oleh orang dengan otoritas lebih tinggi (Super User)</p>
