@@ -20,10 +20,20 @@ Tujuan dibuatnya Aplikasi ini adalah untuk memudahkan para penjual ikan dalam me
 
 # Tools
 
-Aplikasi ini dibuat dengan menggunakan Tools IDE Android Studio dan menggunakan Google Cloud Storage (Google Cloud Platform)
+Aplikasi ini dibuat dengan menggunakan Tools [IDE Android Studio](https://developer.android.com/studio) dan menggunakan [Google Cloud Storage (Google Cloud Firestore Platform)](https://firebase.google.com/)
+<br><br>
+<div align="center">
+  <img align="left" src="https://github.com/Bagus324/marketplace_perikanan/blob/master/readme%20assets/android-studio-icon-486x512-zp9um7zl.png" height="180" width="180"></img>
+  <img align="right" src="https://github.com/Bagus324/marketplace_perikanan/blob/master/readme%20assets/firestore-logo.png" height="180" width="180"></img>
 
-Aplikasi ini juga dibuat menggunakan Bahasa Pemrograman Kotlin
+  </div>
+<br><br><br><br><br><br><br><br>
 
+Aplikasi ini juga dibuat menggunakan Bahasa Pemrograman [Kotlin](https://kotlinlang.org/)
+<div align="center">
+  <img align="center" src="https://github.com/Bagus324/marketplace_perikanan/blob/master/readme%20assets/kotlin_avatar_removebg.png" height="180" width="180"></img>
+
+  </div>
 
 # Fitur
 
