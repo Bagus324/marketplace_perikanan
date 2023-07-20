@@ -15,7 +15,7 @@ Tujuan dibuatnya Aplikasi ini adalah untuk memudahkan para penjual ikan dalam me
 | :-------------------------------------- | :---------- |  :------------------------------------------------------------------------------------------------------------------------ |
 | Akmal Maulana                           | 2007411050  |  [GitHub](https://github.com/akmalm007)                                                                       |
 | Bagus Tri Yulianto Darmawan             | 2007411056  |  [GitHub](https://github.com/Bagus324)                                            |
-| Muhammad Ilham Faclevi                  | 2007411048  |  [GitHub](https://github.com/ilhamfachlevi)                                                            |
+| Muhammad Ilham Fachlevi                  | 2007411048  |  [GitHub](https://github.com/ilhamfachlevi)                                                            |
 
 
 # Tools
