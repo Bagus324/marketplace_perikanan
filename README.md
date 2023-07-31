@@ -58,6 +58,7 @@ Berikut adalah daftar fitur-fitur yang terdapat pada prototype ini
 - [x] Mengganti data ikan (Penjual meng-input data baru untuk ikan yang sudah ada)*
 - [x] Menghapus data ikan (Penjual menghapus data ikan yang sudah tidak dijual lagi)*
 - [x] Mengganti Password
+- [x] Chat
 
 ## Fitur lain
 - [x] Sistem pencegahan untuk user (pembeli) memiliki akun admin (penjual)**
